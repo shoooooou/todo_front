@@ -2,37 +2,52 @@
   <div>
     <h1>TodoApp</h1>
     <h3>タスク名を入力して追加ボタンを入力してください！</h3>
-    <input v-model="taskNameRef" type="text" /><button @click="addTask">
+    <input v-model="inputTaskNameRef" type="text" /><button @click="addTask">
       追加
     </button>
-    <ul v-for="taskName in taskNameListRef" key="taskName">
+    <ul v-for="task in taskListRef" key="task">
       <li>
-        {{ taskName }} <button @click="completeTask(taskName)">完了</button>
+        {{ task.taskName }} <button @click="completeTask(task)">完了</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
+import { getTaskList } from "~/server/TaskService";
+import type { Task } from "~/types/code";
 // タスク名
-const taskNameRef = ref<string>("");
+const inputTaskNameRef = ref<string>("");
 // タスク一覧
-// TODO:APIからタスク一覧を取得して初期値に設定したい
-const taskNameListRef = ref<string[]>([]);
+const taskListRef = ref<Task[]>([]);
+  try {
+    // TODO: uidをユーザに合わせて設定したい
+    const taskList: Task[] = await getTaskList("0000000001");
+    taskListRef.value = taskList;
+  } catch (e) {
+    console.log(e);
+  }
 
 // タスク追加
 // TODO:APIを呼び出してDBにタスク一覧を保存したい
 const addTask = () => {
   // 空文字の場合は追加しない
-  if (taskNameRef.value === "") return;
-  taskNameListRef.value.push(taskNameRef.value);
-  taskNameRef.value = "";
+  if (inputTaskNameRef.value === "") return;
+  // TODO: uidをユーザに合わせて設定したい
+  const addTask: Task = {
+    uid: "0000000001",
+    taskName: inputTaskNameRef.value,
+  };
+  taskListRef.value.push(addTask);
+  inputTaskNameRef.value = "";
 };
+
 // タスク完了
 // TODO:APIを呼び出してDBにタスク一覧を保存したい
-const completeTask = (completeTaskName: string) => {
-  taskNameListRef.value = taskNameListRef.value.filter(
-    (taskName) => completeTaskName !== taskName
+// TODO:同じタスク名が削除されてしまうのを解消したい
+const completeTask = (completeTask: Task) => {
+  taskListRef.value = taskListRef.value.filter(
+    (task) => task.taskName !== completeTask.taskName
   );
 };
 </script>
