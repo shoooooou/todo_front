@@ -1,25 +1,59 @@
 <template>
   <div>
     <main class="container">
-      <h1>Kanban TODO App</h1>
+      <h1>TODO App</h1>
       <div class="kanban-board">
-        <div class="kanban-column">
+        <draggable class="kanban-column" v-model="todoTasks" group="tasks">
+          <template #item="{ element }">
+            <div class="kanban-item">{{ element.name }}</div>
+          </template>
           <h2>Todo</h2>
-          <div class="kanban-item">タスク1</div>
-          <div class="kanban-item">タスク2</div>
-        </div>
-        <div class="kanban-column">
+          <div v-for="task in todoTasks" :key="task.id" class="kanban-item">
+            {{ task.name }}
+          </div>
+        </draggable>
+        <draggable
+          class="kanban-column"
+          v-model="inProgressTasks"
+          group="tasks"
+        >
+          <template #item="{ element }">
+            <div class="kanban-item">{{ element.name }}</div>
+          </template>
           <h2>In Progress</h2>
-          <div class="kanban-item">タスク3</div>
-        </div>
-        <div class="kanban-column">
+          <div
+            v-for="task in inProgressTasks"
+            :key="task.id"
+            class="kanban-item"
+          >
+            {{ task.name }}
+          </div>
+        </draggable>
+        <draggable class="kanban-column" v-model="doneTasks" group="tasks">
+          <template #item="{ element }">
+            <div class="kanban-item">{{ element.name }}</div>
+          </template>
           <h2>Done</h2>
-          <div class="kanban-item">タスク4</div>
-        </div>
+          <div v-for="task in doneTasks" :key="task.id" class="kanban-item">
+            {{ task.name }}
+          </div>
+        </draggable>
       </div>
     </main>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import draggable from "vuedraggable";
+// タスクデータを定義
+const todoTasks = ref([
+  { id: 1, name: "タスク1" },
+  { id: 2, name: "タスク2" },
+]);
+const inProgressTasks = ref([{ id: 3, name: "タスク3" }]);
+const doneTasks = ref([{ id: 4, name: "タスク4" }]);
+</script>
 
 <style scoped lang="scss">
 .container {
