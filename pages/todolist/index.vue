@@ -4,36 +4,34 @@
       <h1>TODO App</h1>
       <div class="kanban-board">
         <draggable class="kanban-column" v-model="todoTasks" group="tasks">
+          <template #header>
+            <h2>Todo</h2>
+          </template>
           <template #item="{ element }">
             <div class="kanban-item">{{ element.name }}</div>
           </template>
-          <h2>Todo</h2>
           <div v-for="task in todoTasks" :key="task.id" class="kanban-item">
             {{ task.name }}
           </div>
         </draggable>
-        <draggable
-          class="kanban-column"
-          v-model="inProgressTasks"
-          group="tasks"
-        >
+        <draggable class="kanban-column" v-model="inProgressTasks" group="tasks">
+          <template #header>
+            <h2>inProgress</h2>
+          </template>
           <template #item="{ element }">
             <div class="kanban-item">{{ element.name }}</div>
           </template>
-          <h2>In Progress</h2>
-          <div
-            v-for="task in inProgressTasks"
-            :key="task.id"
-            class="kanban-item"
-          >
+          <div v-for="task in inProgressTasks" :key="task.id" class="kanban-item">
             {{ task.name }}
           </div>
         </draggable>
         <draggable class="kanban-column" v-model="doneTasks" group="tasks">
+          <template #header>
+            <h2>Done</h2>
+          </template>
           <template #item="{ element }">
             <div class="kanban-item">{{ element.name }}</div>
           </template>
-          <h2>Done</h2>
           <div v-for="task in doneTasks" :key="task.id" class="kanban-item">
             {{ task.name }}
           </div>
@@ -42,6 +40,7 @@
     </main>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from "vue";
