@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt-link to="/sandbox">aiueo</nuxt-link>
+    <nuxt-link to="/todolist">aiueo</nuxt-link>
     <h1>TodoApp</h1>
     <h3>タスク名を入力して追加ボタンを入力してください！</h3>
     <input v-model="inputTaskNameRef" type="text" /><button @click="addTask">
