@@ -1,4 +1,5 @@
 export type Task = {
-  uid: string
-  taskName: string
-}
+  taskName: string;
+  statusCd: '1'|'2'|'3';
+};
+
