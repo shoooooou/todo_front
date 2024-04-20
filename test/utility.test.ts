@@ -8,3 +8,11 @@ describe("toCamelCase", () => {
     expect(toCamelCase("____hoge")).toBe("hoge");
   });
 });
+
+describe("convertKeysToCamelCase", () => {
+  test("スネークケースになっているオブジェクトのキーが全てキャメルケースに変換される", () => {
+    const target = { hoge_foo_bar: "", foo_bar_hoge: "", __hoge: "" };
+    const expected = { hogeFooBar: "", fooBarHoge: "", hoge: "" };
+    expect(convertKeysToCamelCase(target)).toEqual(expected);
+  });
+});
