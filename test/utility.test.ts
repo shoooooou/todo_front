@@ -1,4 +1,4 @@
-import { toCamelCase, convertKeysToCamelCase } from "../server/utility";
+import { toCamelCase, convertKeysToCamelCase } from "../server/UtilityService";
 
 describe("toCamelCase", () => {
   test("'_'が複数存在するスネークケースもキャメルケースに変換される", () => {
