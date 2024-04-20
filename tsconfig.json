@@ -4,6 +4,7 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "esnext",
+    "types": ["jest"], // Jestの型定義を追加
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true
