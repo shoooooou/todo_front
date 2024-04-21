@@ -3,55 +3,52 @@
     <main class="container">
       <h1>TODO App</h1>
       <div class="kanban-board">
-        <draggable class="kanban-column" v-model="todoTasks" group="tasks">
+        <draggable class="kanban-column" v-model="todoTasks" group="tasks" item-key="sequenceNo">
           <template #header>
             <h2>Todo</h2>
           </template>
           <template #item="{ element }">
-            <div class="kanban-item">{{ element.name }}</div>
+            <div class="kanban-item" :key="element.sequenceNo">
+              {{ element.taskName }}
+            </div>
           </template>
-          <div v-for="task in todoTasks" :key="task.id" class="kanban-item">
-            {{ task.name }}
-          </div>
         </draggable>
-        <draggable class="kanban-column" v-model="inProgressTasks" group="tasks">
+        <draggable class="kanban-column" v-model="inProgressTasks" group="tasks" item-key="sequenceNo">
           <template #header>
-            <h2>inProgress</h2>
+            <h2>In Progress</h2>
           </template>
           <template #item="{ element }">
-            <div class="kanban-item">{{ element.name }}</div>
+            <div class="kanban-item" :key="element.sequenceNo">
+              {{ element.taskName }}
+            </div>
           </template>
-          <div v-for="task in inProgressTasks" :key="task.id" class="kanban-item">
-            {{ task.name }}
-          </div>
         </draggable>
-        <draggable class="kanban-column" v-model="doneTasks" group="tasks">
+        <draggable class="kanban-column" v-model="doneTasks" group="tasks" item-key="sequenceNo">
           <template #header>
             <h2>Done</h2>
           </template>
           <template #item="{ element }">
-            <div class="kanban-item">{{ element.name }}</div>
+            <div class="kanban-item" :key="element.sequenceNo">
+              {{ element.taskName }}
+            </div>
           </template>
-          <div v-for="task in doneTasks" :key="task.id" class="kanban-item">
-            {{ task.name }}
-          </div>
         </draggable>
       </div>
     </main>
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref } from "vue";
 import draggable from "vuedraggable";
-// タスクデータを定義
-const todoTasks = ref([
-  { id: 1, name: "タスク1" },
-  { id: 2, name: "タスク2" },
-]);
-const inProgressTasks = ref([{ id: 3, name: "タスク3" }]);
-const doneTasks = ref([{ id: 4, name: "タスク4" }]);
+import type { Task } from "../../types/code";
+import {taskService} from "../../server/TaskService";
+
+const tasks: Task[] = await taskService.getTaskList("0000000001");
+
+const todoTasks = ref<Task[]>(tasks.filter((task) => task.statusCd === "1"));
+const inProgressTasks = ref<Task[]>(tasks.filter((task) => task.statusCd === "2"));
+const doneTasks = ref<Task[]>(tasks.filter((task) => task.statusCd === "3"));
 </script>
 
 <style scoped lang="scss">
@@ -71,7 +68,7 @@ const doneTasks = ref([{ id: 4, name: "タスク4" }]);
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 濃い影を追加 */
   border-radius: 8px;
-  padding: 16px;
+padding: 16px;
 }
 
 .kanban-item {
