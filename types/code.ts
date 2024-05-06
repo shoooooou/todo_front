@@ -1,6 +1,6 @@
 export type Task = {
-  sequenceNo: number;
+  sequenceNo?: number;
   taskName: string;
-  statusCd: '1'|'2'|'3';
+  statusCd: '0'|'1'|'2';
 };
 
