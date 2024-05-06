@@ -48,6 +48,7 @@ import { ref } from "vue";
 import type { Task } from "../../types/code";
 import { taskService } from "../../server/TaskService";
 
+// TODO: uidをユーザに合わせて設定したい
 const tasks: Task[] = await taskService.getTaskList("0000000001");
 
 const todoTasks = ref<Task[]>(tasks.filter((task) => task.statusCd === "0"));

@@ -1,56 +1,74 @@
 <template>
-  <div>
-    <nuxt-link to="/todolist">aiueo</nuxt-link>
-    <h1>TodoApp</h1>
-    <h3>タスク名を入力して追加ボタンを入力してください！</h3>
-    <input v-model="inputTaskNameRef" type="text" /><button @click="addTask">
-      追加
-    </button>
-    <ul v-for="task in taskListRef" key="task">
-      <li>
-        {{ task.taskName }} <button @click="completeTask(task)">完了</button>
-      </li>
-    </ul>
+  <div class="login-container">
+    <form @submit.prevent="login">
+      <h2>ログイン画面</h2>
+      <input v-model="username" type="text" placeholder="ユーザー名" required />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="パスワード"
+        required
+      />
+      <button type="submit">ログイン</button>
+    </form>
   </div>
 </template>
 
-<script setup lang="ts">
-import { taskService } from "../server/TaskService";
-import type { Task } from "../types/code";
+<script setup>
 import { ref } from "vue";
 
-// タスク名
-const inputTaskNameRef = ref<string>("");
-// タスク一覧
-const taskListRef = ref<Task[]>([]);
-try {
-  // TODO: uidをユーザに合わせて設定したい
-  const taskList: Task[] = await taskService.getTaskList("0000000001");
-  taskListRef.value = taskList;
-} catch (e) {
-  console.log(e);
-}
+const username = ref("");
+const password = ref("");
 
-// タスク追加
-// TODO:APIを呼び出してDBにタスク一覧を保存したい
-const addTask = () => {
-  // 空文字の場合は追加しない
-  if (inputTaskNameRef.value === "") return;
-  // TODO: uidをユーザに合わせて設定したい
-  const addTask: Task = {
-    uid: "0000000001",
-    taskName: inputTaskNameRef.value,
-  };
-  taskListRef.value.push(addTask);
-  inputTaskNameRef.value = "";
-};
-
-// タスク完了
-// TODO:APIを呼び出してDBにタスク一覧を保存したい
-// TODO:同じタスク名が削除されてしまうのを解消したい
-const completeTask = (completeTask: Task) => {
-  taskListRef.value = taskListRef.value.filter(
-    (task) => task.taskName !== completeTask.taskName
-  );
+const login = () => {
+  if (username.value && password.value) {
+    alert(`ようこそ、${username.value}さん！`);
+  } else {
+    alert("ユーザー名とパスワードを入力してください。");
+  }
 };
 </script>
+
+<style scoped>
+h2 {
+  color: #3ac2d3;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+input {
+  margin: 10px 0;
+  padding: 10px;
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #26c6df;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1c779e;
+}
+</style>
