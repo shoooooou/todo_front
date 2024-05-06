@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { getTaskList } from "../server/TaskService";
+import { taskService } from "../server/TaskService";
 import type { Task } from "../types/code";
 import { ref } from "vue";
 
@@ -25,7 +25,7 @@ const inputTaskNameRef = ref<string>("");
 const taskListRef = ref<Task[]>([]);
 try {
   // TODO: uidをユーザに合わせて設定したい
-  const taskList: Task[] = await getTaskList("0000000001");
+  const taskList: Task[] = await taskService.getTaskList("0000000001");
   taskListRef.value = taskList;
 } catch (e) {
   console.log(e);

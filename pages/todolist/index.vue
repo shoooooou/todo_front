@@ -3,36 +3,24 @@
     <main class="container">
       <h1>TODO App</h1>
       <div class="kanban-board">
-        <draggable class="kanban-column" v-model="todoTasks" group="tasks" item-key="sequenceNo">
-          <template #header>
-            <h2>Todo</h2>
-          </template>
-          <template #item="{ element }">
-            <div class="kanban-item" :key="element.sequenceNo">
-              {{ element.taskName }}
-            </div>
-          </template>
-        </draggable>
-        <draggable class="kanban-column" v-model="inProgressTasks" group="tasks" item-key="sequenceNo">
-          <template #header>
-            <h2>In Progress</h2>
-          </template>
-          <template #item="{ element }">
-            <div class="kanban-item" :key="element.sequenceNo">
-              {{ element.taskName }}
-            </div>
-          </template>
-        </draggable>
-        <draggable class="kanban-column" v-model="doneTasks" group="tasks" item-key="sequenceNo">
-          <template #header>
-            <h2>Done</h2>
-          </template>
-          <template #item="{ element }">
-            <div class="kanban-item" :key="element.sequenceNo">
-              {{ element.taskName }}
-            </div>
-          </template>
-        </draggable>
+        <KanbanColumn
+          title="Todo"
+          v-model:tasks="todoTasks"
+          item-key="sequenceNo"
+          class="todo-column"
+        />
+        <KanbanColumn
+          title="In Progress"
+          v-model:tasks="inProgressTasks"
+          item-key="sequenceNo"
+          class="inprogress-column"
+        />
+        <KanbanColumn
+          title="Done"
+          v-model:tasks="doneTasks"
+          item-key="sequenceNo"
+          class="done-column"
+        />
       </div>
     </main>
   </div>
