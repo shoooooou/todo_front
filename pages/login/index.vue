@@ -23,32 +23,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { authenticationService } from "~/server/AuthenticationService";
-import type { LoginUser } from "~/types/code";
+  import { ref } from "vue";
+  import { authenticationService } from "~/server/AuthenticationService";
+  import type { LoginUser } from "~/types/code";
 
-const usernameRef = ref("");
-const passwordRef = ref("");
+  const usernameRef = ref("");
+  const passwordRef = ref("");
+  const router = useRouter();
 
-const login = async () => {
-  const inputUser: LoginUser = {
-    uid: usernameRef.value,
-    password: passwordRef.value,
+  const login = async () => {
+    const inputUser: LoginUser = {
+      uid: usernameRef.value,
+      password: passwordRef.value,
+    };
+    let isLogin;
+    try {
+      isLogin = await authenticationService.login(inputUser);
+    } catch (e) {
+      // TODO: エラーページに遷移
+      alert("エラー");
+      console.log(e);
+    }
+    if (isLogin) {
+      alert(`ようこそ、${inputUser.uid}さん！`);
+      router.push("/todolist");
+    } else {
+      alert("ログインに失敗しました。ユーザー名とパスワードを確認してください。");
+    }
   };
-  let isLogin;
-  try {
-    isLogin = await authenticationService.login(inputUser);
-  } catch (e) {
-    // TODO: エラーページに遷移
-    alert("エラー");
-    console.log(e);
-  }
-  if (isLogin) {
-    alert(`ようこそ、${inputUser.uid}さん！`);
-  } else {
-    alert("ログインに失敗しました。ユーザー名とパスワードを確認してください。");
-  }
-};
 </script>
 
 <style scoped>
