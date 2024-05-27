@@ -2,9 +2,9 @@
   <div class="login-container">
     <form>
       <h2>ログイン画面</h2>
-      <h3>
+      <p>
         アカウント登録していない方は<NuxtLink to="/signUp">こちら</NuxtLink>
-      </h3>
+      </p>
       <input
         v-model="usernameRef"
         type="text"
@@ -56,8 +56,9 @@
 <style scoped>
 h2 {
   color: #3ac2d3;
+  margin-bottom: 0;
 }
-h3 {
+p {
   color: #3ac2d3;
 }
 .login-container {

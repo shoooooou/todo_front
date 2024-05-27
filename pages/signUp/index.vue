@@ -2,6 +2,7 @@
   <div class="login-container">
     <form>
       <h2>アカウント登録</h2>
+      <p>既にアカウント作成されている方は<NuxtLink to="/login">こちら</NuxtLink></p>
       <input v-model="username" type="text" placeholder="ユーザー名" required />
       <input
         v-model="password"
@@ -51,6 +52,10 @@ const registerUser = async () => {
 
 <style scoped>
 h2 {
+  color: #3ac2d3;
+  margin-bottom: 0;
+}
+p {
   color: #3ac2d3;
 }
 .login-container {
