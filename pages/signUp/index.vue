@@ -9,7 +9,7 @@
         placeholder="パスワード"
         required
       />
-      <button @click="registerUser" type="submit">アカウント登録</button>
+      <button @click="registerUser" :disabled="isDisabled" type="submit">アカウント登録</button>
     </form>
   </div>
 </template>
@@ -21,6 +21,10 @@ import { authenticationService } from "~/server/AuthenticationService";
 
 const username = ref("");
 const password = ref("");
+
+const isDisabled = computed(() => {
+  return !username.value || !password.value;
+})
 
 const registerUser = async () => {
   const inputUser: LoginUser = {
