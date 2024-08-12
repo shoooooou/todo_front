@@ -5,7 +5,8 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:jest/recommended", // eslint-plugin-jestの推奨設定を追加
+    "plugin:jest/recommended",
+    "plugin:storybook/recommended"
   ],
   plugins: [
     "jest", // Jestプラグインを使用する宣言

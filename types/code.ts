@@ -8,3 +8,8 @@ export type LoginUser = {
   uid: string;
   password: string;
 };
+
+const task:Task = {
+  taskName: 'todo1',
+  
+}

@@ -23,10 +23,10 @@ export const authenticationService = {
         `${apiUrl}/todo/authenticate/register`,
         loginUser
       );
-      return response.data;
       if (response.status === 400) {
         return false;
       }
+      return response.data;
     } catch (error) {
       console.error("Error register data:", error);
       throw error;
